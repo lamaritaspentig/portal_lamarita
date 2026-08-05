@@ -103,45 +103,45 @@
         </div>
     </div>
 
-    <div class="bg-blue-900 text-white py-2.5 px-6 text-xs relative z-30">
-        <div class="max-w-[1700px] mx-auto flex flex-wrap justify-between items-center gap-2">
-            <div class="flex items-center gap-2">
-                <span class="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
-                <span>Server Portal Utama SPENTIG: <strong class="text-emerald-300">Online</strong></span>
+    <div class="bg-blue-900 text-white py-2 sm:py-2.5 px-3 sm:px-6 text-[11px] sm:text-xs relative z-30 border-b border-blue-800/50">
+        <div class="max-w-[1700px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+            <div class="flex items-center justify-center gap-2">
+                <span class="inline-flex h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="tracking-wide">Server Portal Utama SPENTIG: <strong class="text-emerald-300 font-semibold">Online</strong></span>
             </div>
-            <div class="flex items-center gap-4">
-                <div id="topUserBadge" class="hidden items-center gap-2 bg-blue-800/80 px-3 py-1 rounded-full text-xs border border-blue-700">
+            <div class="flex flex-wrap items-center justify-center sm:justify-end gap-2 sm:gap-4">
+                <div id="topUserBadge" class="hidden items-center gap-2 bg-blue-800/90 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs border border-blue-700/80 shadow-sm">
                     <i class="fa-solid fa-user-check text-emerald-400"></i>
-                    <span id="topUserName" class="font-bold text-white">...</span>
-                    <span id="topUserRole" class="bg-blue-600 text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase">...</span>
-                    <button onclick="handleLogout()" class="ml-2 text-rose-300 hover:text-white transition-colors" title="Keluar Portal">
+                    <span id="topUserName" class="font-bold text-white max-w-[120px] sm:max-w-none truncate">...</span>
+                    <span id="topUserRole" class="bg-blue-600 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-semibold uppercase">...</span>
+                    <button onclick="handleLogout()" class="ml-1 text-rose-300 hover:text-white transition-colors" title="Keluar Portal">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
                 <div class="flex items-center gap-1.5 text-slate-300 tabular-nums">
-                    <i class="fa-solid fa-clock"></i>
-                    <span id="liveClock" class="inline-block min-w-[230px] text-left">Memuat waktu...</span>
+                    <i class="fa-solid fa-clock text-[10px] sm:text-xs"></i>
+                    <span id="liveClock" class="inline-block min-w-[180px] sm:min-w-[230px] text-center sm:text-left">Memuat waktu...</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <header class="bg-white shadow-md py-6 px-6 md:px-12 relative z-20 shrink-0">
+    <header class="bg-white shadow-md py-4 sm:py-6 px-4 sm:px-8 md:px-12 relative z-20 shrink-0">
         <div class="max-w-[1700px] mx-auto flex flex-col items-center">
             <div class="flex flex-col items-center justify-center text-center max-w-3xl w-full">
-                <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 justify-center w-full">
+                <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 justify-center w-full">
                     <div class="shrink-0 drop-shadow-xl relative group">
                         <img src="https://raw.githubusercontent.com/lamaritaspentig/asri/main/spentig.ico" 
                              alt="Logo Spentig" 
-                             class="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-contain transform hover:scale-105 transition-transform duration-300"
+                             class="relative w-16 h-16 sm:w-22 sm:h-22 md:w-28 md:h-28 object-contain transform hover:scale-105 transition-transform duration-300"
                              onerror="this.onerror=null; this.src='https://placehold.co/110x110/1e3a8a/ffffff?text=Spentig';">
                     </div>
                     <div class="text-center sm:text-left">
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight flex items-center justify-center sm:justify-start">
+                        <h1 class="text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight flex items-center justify-center sm:justify-start">
                             <span class="text-blue-700">Portal</span>
-                            <span class="text-orange-600 ml-2">Lamarita</span>
+                            <span class="text-orange-600 ml-1.5 sm:ml-2">Lamarita</span>
                         </h1>
-                        <p class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-slate-500 mt-1.5 leading-relaxed">
+                        <p class="text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-wider sm:tracking-widest text-slate-500 mt-1 sm:mt-1.5 leading-snug sm:leading-relaxed">
                             <span class="block">Layanan Administrasi dan Informasi Berbasis Digital</span>
                             <span class="block mt-0.5 text-slate-400">UPTD SPF SMP Negeri 3 Makassar</span>
                         </p>
