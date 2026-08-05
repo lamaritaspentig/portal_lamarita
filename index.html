@@ -118,9 +118,9 @@
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
-                <div class="flex items-center gap-1.5 text-slate-300">
+                <div class="flex items-center gap-1.5 text-slate-300 tabular-nums">
                     <i class="fa-solid fa-clock"></i>
-                    <span id="liveClock">Memuat waktu...</span>
+                    <span id="liveClock" class="inline-block min-w-[230px] text-left">Memuat waktu...</span>
                 </div>
             </div>
         </div>
@@ -147,19 +147,11 @@
                         </p>
                     </div>
                 </div>
-                <div class="hidden sm:flex items-center gap-2 mt-5 text-slate-300 w-full justify-center">
-                    <span class="h-[1px] bg-slate-200 flex-grow"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
-                    <span class="h-[1px] bg-slate-200 flex-grow"></span>
-                </div>
             </div>
         </div>
     </header>
 
     <main class="max-w-[1700px] mx-auto px-4 sm:px-8 lg:px-12 py-8 relative z-10 flex-grow w-full space-y-6">
-        <!-- User Banner Card (Cleaned: Role Badge removed, role appears in top header only) -->
         <div id="userWelcomeCard" class="hidden glass-card p-6 rounded-2xl border border-blue-200/80 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-gradient-to-r from-blue-50/50 to-orange-50/30">
             <div class="flex items-center gap-4">
                 <div id="userAvatar" class="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow">U</div>
@@ -169,7 +161,6 @@
             </div>
         </div>
 
-        <!-- Dynamic Services Grid Container -->
         <div id="portalGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
             <div class="col-span-full text-center py-12 text-slate-400">
                 <i class="fa-solid fa-lock text-4xl mb-3 block text-slate-300"></i>
@@ -192,8 +183,7 @@
     </footer>
 
     <script>
-        // MASUKKAN URL GOOGLE APPS SCRIPT WEB APP ANDA DI SINI
-        const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytDMzvgsK41PeIY1_DvJBzxiOTNiGU1q-5TtM6iF7iSzCgHHG7ZJQddkd1dg9_vFRv-w/exec";
+        const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywl5r5x2UREBeMBP_Dx4ip0OQmNPSgjEbLouYIPx-FPkkvlvp5B6VKzdhlcpdO8soT5w/exec";
         let currentUser = null;
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -222,12 +212,15 @@
         }
 
         async function loginAsGuest() {
-            if (!checkAppScriptUrl()) return;
-
             setGuestLoading(true);
             hideLoginStatus();
 
             try {
+                if (!APP_SCRIPT_URL || APP_SCRIPT_URL.includes('PASTE_URL_WEB_APP_ANDA_DI_SINI')) {
+                    showLoginStatus('Koneksi server otentikasi belum terkonfigurasi. Silakan hubungi Administrator TI.', 'error');
+                    return;
+                }
+
                 const response = await fetch(APP_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -235,17 +228,21 @@
                 });
                 const result = await response.json();
 
-                currentUser = { username: 'tamu_publik', name: 'Tamu / Pengunjung Umum', role: 'Umum' };
-                applyUserLoggedInState(currentUser);
+                if (result.success) {
+                    currentUser = { username: 'tamu_publik', name: 'Tamu / Pengunjung Umum', role: 'Umum' };
+                    applyUserLoggedInState(currentUser);
 
-                if (result.success && result.links && result.links.length > 0) {
-                    renderDynamicCards(result.links);
+                    if (result.links && result.links.length > 0) {
+                        renderDynamicCards(result.links);
+                    } else {
+                        showEmptyState('Umum');
+                    }
+                    showToast('Selamat Datang! Anda masuk sebagai Tamu / Pengunjung Umum.', 'success');
                 } else {
-                    showEmptyState('Umum');
+                    showLoginStatus(result.message || 'Gagal mengambil data layanan tamu.', 'error');
                 }
-                showToast('Selamat Datang! Anda masuk dalam Mode Tamu / Publik.', 'success');
             } catch (e) {
-                showLoginStatus('Gagal terhubung ke server untuk Mode Tamu.', 'error');
+                showLoginStatus('Gagal terhubung ke server portal.', 'error');
             } finally {
                 setGuestLoading(false);
             }
@@ -261,18 +258,20 @@
                 return;
             }
 
-            if (!checkAppScriptUrl()) return;
-
             setLoginLoading(true);
             showLoginStatus('Verifikasi data...', 'info');
 
             try {
+                if (!APP_SCRIPT_URL || APP_SCRIPT_URL.includes('PASTE_URL_WEB_APP_ANDA_DI_SINI')) {
+                    showLoginStatus('Koneksi server otentikasi belum terkonfigurasi. Silakan hubungi Administrator TI.', 'error');
+                    return;
+                }
+
                 const response = await fetch(APP_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({ action: 'login', username, password })
                 });
-
                 const result = await response.json();
 
                 if (result.success && result.user) {
@@ -290,19 +289,11 @@
                     showLoginStatus(result.message || 'Login gagal! NIP/NISN/Username atau Kata Sandi salah.', 'error');
                 }
             } catch (err) {
-                console.error('AppScript Auth Error:', err);
+                console.error('Auth Error:', err);
                 showLoginStatus('Gagal terhubung ke server. Periksa koneksi internet Anda.', 'error');
             } finally {
                 setLoginLoading(false);
             }
-        }
-
-        function checkAppScriptUrl() {
-            if (!APP_SCRIPT_URL || APP_SCRIPT_URL.includes('PASTE_URL_WEB_APP_ANDA_DI_SINI')) {
-                showLoginStatus('URL Web App Apps Script belum dikonfigurasi di index.html!', 'warning');
-                return false;
-            }
-            return true;
         }
 
         function renderDynamicCards(links) {
