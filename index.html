@@ -52,6 +52,7 @@
         <div class="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-orange-400/10 blur-[150px]"></div>
     </div>
 
+    <!-- Notification Toast Container -->
     <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
 
     <div id="loginOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md transition-opacity duration-300 overflow-y-auto">
@@ -118,9 +119,9 @@
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
-                <div class="flex items-center gap-1.5 text-slate-300 tabular-nums">
-                    <i class="fa-solid fa-clock text-[10px] sm:text-xs"></i>
-                    <span id="liveClock" class="inline-block min-w-[180px] sm:min-w-[230px] text-center sm:text-left">Memuat waktu...</span>
+                <div class="hidden sm:flex items-center gap-1.5 text-slate-300 tabular-nums">
+                    <i class="fa-solid fa-clock text-xs"></i>
+                    <span id="liveClock" class="inline-block min-w-[230px] text-left">Memuat waktu...</span>
                 </div>
             </div>
         </div>
@@ -183,7 +184,7 @@
     </footer>
 
     <script>
-        const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywl5r5x2UREBeMBP_Dx4ip0OQmNPSgjEbLouYIPx-FPkkvlvp5B6VKzdhlcpdO8soT5w/exec";
+        const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSPAi1f6iNXrhV2bgteTy800dB09NKj43VIEoN0gRbr80ce87hksHGFNzlPEng7Kr14Q/exec";
         let currentUser = null;
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -195,7 +196,7 @@
             const clockEl = document.getElementById('liveClock');
             if (clockEl) {
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-                clockEl.textContent = new Date().toLocaleDateString('id-ID', options) + ' WITA';
+                clockEl.textContent = new Date().toLocaleString('id-ID', options) + ' WITA';
             }
         }
 
